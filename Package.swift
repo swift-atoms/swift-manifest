@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-manifest-primitives",
+    name: "swift-manifest",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -12,42 +12,42 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "Manifest Primitives", targets: ["Manifest Primitives"]),
+        .library(name: "Manifest", targets: ["Manifest"]),
         .library(
-            name: "Manifest Primitives Test Support",
-            targets: ["Manifest Primitives Test Support"]
+            name: "Manifest Test Support",
+            targets: ["Manifest Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ascii.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-byte-parser-primitives.git",
+            url: "https://github.com/swift-molecules/swift-byte-parser.git",
             branch: "main"
         ),
     ],
     targets: [
         .target(
-            name: "Manifest Primitives",
+            name: "Manifest",
             dependencies: [
-                .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
-                .product(name: "Byte Parser Primitives", package: "swift-byte-parser-primitives"),
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(name: "Byte Parser", package: "swift-byte-parser"),
             ]
         ),
         .target(
-            name: "Manifest Primitives Test Support",
+            name: "Manifest Test Support",
             dependencies: [
-                "Manifest Primitives"
+                "Manifest"
             ],
             path: "Tests/Support"
         ),
         .testTarget(
-            name: "Manifest Primitives Tests",
+            name: "Manifest Tests",
             dependencies: [
-                "Manifest Primitives",
-                "Manifest Primitives Test Support",
+                "Manifest",
+                "Manifest Test Support",
             ]
         ),
     ],

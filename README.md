@@ -1,11 +1,11 @@
-# swift-manifest-primitives
+# swift-manifest
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
 Foundation-clean abstractions for the `Manifest` namespace. Owns the
 pure value types and parsing primitives that
-[`swift-manifests`](https://github.com/swift-foundations/swift-manifests)
-(the L3 manifest loader and chain resolver) consumes.
+[`swift-manifests`](https://github.com/swift-compositions/swift-manifests)
+(the L4 manifest loader and chain resolver) consumes.
 
 ## Quick Start
 
@@ -13,7 +13,7 @@ Scan a manifest source file's leading comment lines for a
 `// parent: <URL>` directive:
 
 ```swift
-import Manifest_Primitives
+import Manifest
 
 let source: [UInt8] = Array("// parent: https://example.com/Lint.swift\n".utf8)
 
@@ -32,7 +32,7 @@ composition are all higher-layer concerns.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-manifest-primitives.git", branch: "main"),
+    .package(url: "https://github.com/swift-molecules/swift-manifest.git", branch: "main"),
 ]
 ```
 
@@ -42,7 +42,7 @@ dependencies: [
 .target(
     name: "YourTarget",
     dependencies: [
-        .product(name: "Manifest Primitives", package: "swift-manifest-primitives"),
+        .product(name: "Manifest", package: "swift-manifest"),
     ]
 )
 ```
@@ -63,22 +63,22 @@ external SDK dependencies.
 
 This package imports no `Foundation`, no networking module, no
 filesystem module, no JSON encoder/decoder. Its only dependencies are
-two sibling primitives packages —
-[`swift-ascii-primitives`](https://github.com/swift-primitives/swift-ascii-primitives)
+two sibling molecule packages —
+[`swift-ascii`](https://github.com/swift-molecules/swift-ascii)
 and
-[`swift-parser-primitives`](https://github.com/swift-primitives/swift-parser-primitives) —
+[`swift-byte-parser`](https://github.com/swift-molecules/swift-byte-parser) —
 which carry the same constraint.
 
 The constraint exists because the higher-layer modules that build on
-this package (the L3 loader's subprocess-based eval pipeline, the L3
+this package (the L4 loader's subprocess-based eval pipeline, the L4
 resolver's URI fetcher and chain composition) need to be re-composable
 across deployment platforms with different system libraries. A clean
-L1 surface lets each higher-layer module choose its own Foundation /
+L2 surface lets each higher-layer module choose its own Foundation /
 URI / filesystem stack independently.
 
 ## Intended consumers
 
-[`swift-manifests`](https://github.com/swift-foundations/swift-manifests)
+[`swift-manifests`](https://github.com/swift-compositions/swift-manifests)
 is the primary consumer:
 
 - `Manifest Loader` consumes `Manifest.Configuration` as the input

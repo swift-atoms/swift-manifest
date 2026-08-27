@@ -1,5 +1,5 @@
-internal import ASCII_Primitives
-internal import Byte_Parser_Primitives
+internal import ASCII
+internal import Byte_Parser
 
 extension Manifest {
 
@@ -42,7 +42,7 @@ extension Manifest.Parent {
             first == .ascii.space || first == .ascii.tab
         {
 
-            do throws(Input_Primitives.Input.Stream.Error) {
+            do throws(Input.Input.Stream.Error) {
                 _ = try input.advance()
             } catch {}
         }
@@ -57,7 +57,7 @@ extension Manifest.Parent {
             first == .ascii.space || first == .ascii.tab
         {
 
-            do throws(Input_Primitives.Input.Stream.Error) {
+            do throws(Input.Input.Stream.Error) {
                 _ = try input.advance()
             } catch {}
         }
@@ -70,7 +70,7 @@ extension Manifest.Parent {
             }
             urlBytes.append(first.underlying)
 
-            do throws(Input_Primitives.Input.Stream.Error) {
+            do throws(Input.Input.Stream.Error) {
                 _ = try input.advance()
             } catch {}
         }

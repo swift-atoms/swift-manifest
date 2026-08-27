@@ -1,4 +1,4 @@
-import Manifest_Primitives
+import Manifest
 import Testing
 
 extension Manifest.Parent {
