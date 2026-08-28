@@ -1,7 +1,7 @@
 # .github/metadata.yaml
-description: "Manifest — L2 abstractions for file-scope typed-value manifests: loader configuration, driver-shim dependencies, and byte-level `// parent: <URL>` directive scanning."
+description: "Manifest — L1 abstractions for file-scope typed-value manifests: loader configuration, driver-shim dependencies, and byte-level `// parent: <URL>` directive scanning."
 topics:
-  - molecules
+  - primitives
   - manifest
   - configuration
 homepage: "https://swift-institute.org"

@@ -18,36 +18,24 @@ let package = Package(
             targets: ["Manifest Test Support"]
         ),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-molecules/swift-ascii.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-byte-parser.git",
-            branch: "main"
-        ),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Manifest",
-            dependencies: [
-                .product(name: "ASCII", package: "swift-ascii"),
-                .product(name: "Byte Parser", package: "swift-byte-parser"),
-            ]
+            dependencies: []
         ),
         .target(
             name: "Manifest Test Support",
             dependencies: [
-                "Manifest"
+                .target(name: "Manifest")
             ],
             path: "Tests/Support"
         ),
         .testTarget(
             name: "Manifest Tests",
             dependencies: [
-                "Manifest",
-                "Manifest Test Support",
+                .target(name: "Manifest"),
+                .target(name: "Manifest Test Support"),
             ]
         ),
     ],

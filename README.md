@@ -4,8 +4,8 @@
 
 Foundation-clean abstractions for the `Manifest` namespace. Owns the
 pure value types and parsing primitives that
-[`swift-manifests`](https://github.com/swift-compositions/swift-manifests)
-(the L4 manifest loader and chain resolver) consumes.
+[`swift-manifests`](https://github.com/swift-foundations/swift-manifests)
+(the L3 manifest loader and chain resolver) consumes.
 
 ## Quick Start
 
@@ -32,7 +32,7 @@ composition are all higher-layer concerns.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-manifest.git", branch: "main"),
+    .package(url: "https://github.com/swift-atoms/swift-manifest.git", branch: "main"),
 ]
 ```
 
@@ -63,22 +63,22 @@ external SDK dependencies.
 
 This package imports no `Foundation`, no networking module, no
 filesystem module, no JSON encoder/decoder. Its only dependencies are
-two sibling molecule packages —
-[`swift-ascii`](https://github.com/swift-molecules/swift-ascii)
+two sibling primitives packages —
+[`swift-ascii`](https://github.com/swift-atoms/swift-ascii)
 and
-[`swift-byte-parser`](https://github.com/swift-molecules/swift-byte-parser) —
+[`swift-parser`](https://github.com/swift-atoms/swift-parser) —
 which carry the same constraint.
 
 The constraint exists because the higher-layer modules that build on
-this package (the L4 loader's subprocess-based eval pipeline, the L4
+this package (the L3 loader's subprocess-based eval pipeline, the L3
 resolver's URI fetcher and chain composition) need to be re-composable
 across deployment platforms with different system libraries. A clean
-L2 surface lets each higher-layer module choose its own Foundation /
+L1 surface lets each higher-layer module choose its own Foundation /
 URI / filesystem stack independently.
 
 ## Intended consumers
 
-[`swift-manifests`](https://github.com/swift-compositions/swift-manifests)
+[`swift-manifests`](https://github.com/swift-foundations/swift-manifests)
 is the primary consumer:
 
 - `Manifest Loader` consumes `Manifest.Configuration` as the input
