@@ -12,39 +12,43 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
+        .library(name: "Manifest", targets: ["Manifest"]),
         .library(
-            name: "Manifest",
-            targets: ["Manifest"]
-        ),
-        .library(
-            name: "Manifest Standard Library Integration",
-            targets: ["Manifest Standard Library Integration"]
-        ),
-        .library(
-            name: "Manifest Apple Foundation Integration",
-            targets: ["Manifest Apple Foundation Integration"]
+            name: "Manifest Test Support",
+            targets: ["Manifest Test Support"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            url: "https://github.com/swift-molecules/swift-ascii.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-byte-parser.git",
+            branch: "main"
+        ),
+    ],
     targets: [
         .target(
             name: "Manifest",
-            dependencies: []
-        ),
-        .target(
-            name: "Manifest Standard Library Integration",
-            dependencies: ["Manifest"]
-        ),
-        .target(
-            name: "Manifest Apple Foundation Integration",
             dependencies: [
-                "Manifest",
-                "Manifest Standard Library Integration",
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(name: "Byte Parser", package: "swift-byte-parser"),
             ]
+        ),
+        .target(
+            name: "Manifest Test Support",
+            dependencies: [
+                "Manifest"
+            ],
+            path: "Tests/Support"
         ),
         .testTarget(
             name: "Manifest Tests",
-            dependencies: ["Manifest"]
+            dependencies: [
+                "Manifest",
+                "Manifest Test Support",
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]
