@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-manifest-primitives",
+    name: "swift-manifest",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -12,42 +12,30 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "Manifest Primitives", targets: ["Manifest Primitives"]),
+        .library(name: "Manifest", targets: ["Manifest"]),
         .library(
-            name: "Manifest Primitives Test Support",
-            targets: ["Manifest Primitives Test Support"]
+            name: "Manifest Test Support",
+            targets: ["Manifest Test Support"]
         ),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-byte-parser-primitives.git",
-            branch: "main"
-        ),
-    ],
+    dependencies: [],
     targets: [
         .target(
-            name: "Manifest Primitives",
-            dependencies: [
-                .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
-                .product(name: "Byte Parser Primitives", package: "swift-byte-parser-primitives"),
-            ]
+            name: "Manifest",
+            dependencies: []
         ),
         .target(
-            name: "Manifest Primitives Test Support",
+            name: "Manifest Test Support",
             dependencies: [
-                "Manifest Primitives"
+                .target(name: "Manifest")
             ],
             path: "Tests/Support"
         ),
         .testTarget(
-            name: "Manifest Primitives Tests",
+            name: "Manifest Tests",
             dependencies: [
-                "Manifest Primitives",
-                "Manifest Primitives Test Support",
+                .target(name: "Manifest"),
+                .target(name: "Manifest Test Support"),
             ]
         ),
     ],

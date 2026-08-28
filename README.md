@@ -1,4 +1,4 @@
-# swift-manifest-primitives
+# swift-manifest
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -13,7 +13,7 @@ Scan a manifest source file's leading comment lines for a
 `// parent: <URL>` directive:
 
 ```swift
-import Manifest_Primitives
+import Manifest
 
 let source: [UInt8] = Array("// parent: https://example.com/Lint.swift\n".utf8)
 
@@ -32,7 +32,7 @@ composition are all higher-layer concerns.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-manifest-primitives.git", branch: "main"),
+    .package(url: "https://github.com/swift-atoms/swift-manifest.git", branch: "main"),
 ]
 ```
 
@@ -42,7 +42,7 @@ dependencies: [
 .target(
     name: "YourTarget",
     dependencies: [
-        .product(name: "Manifest Primitives", package: "swift-manifest-primitives"),
+        .product(name: "Manifest", package: "swift-manifest"),
     ]
 )
 ```
@@ -64,9 +64,9 @@ external SDK dependencies.
 This package imports no `Foundation`, no networking module, no
 filesystem module, no JSON encoder/decoder. Its only dependencies are
 two sibling primitives packages —
-[`swift-ascii-primitives`](https://github.com/swift-primitives/swift-ascii-primitives)
+[`swift-ascii`](https://github.com/swift-atoms/swift-ascii)
 and
-[`swift-parser-primitives`](https://github.com/swift-primitives/swift-parser-primitives) —
+[`swift-parser`](https://github.com/swift-atoms/swift-parser) —
 which carry the same constraint.
 
 The constraint exists because the higher-layer modules that build on
