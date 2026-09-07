@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [
         .library(name: "Manifest", targets: ["Manifest"]),
-        .library(name: "Manifest Standard Library Integration", targets: ["Manifest Standard Library Integration"]),
-        .library(name: "Manifest Foundation Library Integration", targets: ["Manifest Foundation Library Integration"]),
+
+        .library(name: "Manifest Foundation Integration", targets: ["Manifest Foundation Integration"]),
         .library(name: "Manifest Test Support", targets: ["Manifest Test Support"]),
     ],
     dependencies: [],
@@ -25,20 +25,13 @@ let package = Package(
             ],
             path: "Sources/Manifest"
         ),
+        
         .target(
-            name: "Manifest Standard Library Integration",
+            name: "Manifest Foundation Integration",
             dependencies: [
                 .target(name: "Manifest"),
             ],
-            path: "Sources/Manifest Standard Library Integration"
-        ),
-        .target(
-            name: "Manifest Foundation Library Integration",
-            dependencies: [
-                .target(name: "Manifest"),
-                .target(name: "Manifest Standard Library Integration"),
-            ],
-            path: "Sources/Manifest Foundation Library Integration"
+            path: "Sources/Manifest Foundation Integration"
         ),
         .target(
             name: "Manifest Test Support",
@@ -52,8 +45,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Manifest"),
                 .target(name: "Manifest Test Support"),
-                .target(name: "Manifest Standard Library Integration"),
-                .target(name: "Manifest Foundation Library Integration"),
+                .target(name: "Manifest Foundation Integration"),
             ],
             path: "Tests/Manifest Tests"
         ),
