@@ -13,21 +13,37 @@ let package = Package(
     ],
     products: [
         .library(name: "Manifest", targets: ["Manifest"]),
-        .library(
-            name: "Manifest Test Support",
-            targets: ["Manifest Test Support"]
-        ),
+        .library(name: "Manifest Standard Library Integration", targets: ["Manifest Standard Library Integration"]),
+        .library(name: "Manifest Foundation Library Integration", targets: ["Manifest Foundation Library Integration"]),
+        .library(name: "Manifest Test Support", targets: ["Manifest Test Support"]),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "Manifest",
-            dependencies: []
+            dependencies: [
+            ],
+            path: "Sources/Manifest"
+        ),
+        .target(
+            name: "Manifest Standard Library Integration",
+            dependencies: [
+                .target(name: "Manifest"),
+            ],
+            path: "Sources/Manifest Standard Library Integration"
+        ),
+        .target(
+            name: "Manifest Foundation Library Integration",
+            dependencies: [
+                .target(name: "Manifest"),
+                .target(name: "Manifest Standard Library Integration"),
+            ],
+            path: "Sources/Manifest Foundation Library Integration"
         ),
         .target(
             name: "Manifest Test Support",
             dependencies: [
-                .target(name: "Manifest")
+                .target(name: "Manifest"),
             ],
             path: "Tests/Support"
         ),
@@ -36,14 +52,17 @@ let package = Package(
             dependencies: [
                 .target(name: "Manifest"),
                 .target(name: "Manifest Test Support"),
-            ]
+                .target(name: "Manifest Standard Library Integration"),
+                .target(name: "Manifest Foundation Library Integration"),
+            ],
+            path: "Tests/Manifest Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    let ecosystem: [SwiftSetting] = [
+for target in package.targets {
+    target.swiftSettings = [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
@@ -52,8 +71,4 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableExperimentalFeature("Lifetimes"),
         .enableUpcomingFeature("InferIsolatedConformances"),
     ]
-
-    let package: [SwiftSetting] = []
-
-    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }
