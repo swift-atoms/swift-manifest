@@ -17,15 +17,25 @@ let package = Package(
         .library(name: "Manifest Foundation Integration", targets: ["Manifest Foundation Integration"]),
         .library(name: "Manifest Test Support", targets: ["Manifest Test Support"]),
     ],
-    dependencies: [],
+    traits: [
+        .trait(name: "Parser", description: "Absorbed Parser integration"),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-cursor.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-parser.git", branch: "main"),
+    ],
     targets: [
         .target(
             name: "Manifest",
             dependencies: [
-            ],
+                .product(name: "ASCII", package: "swift-ascii", condition: .when(traits: ["Parser"])),
+                .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"])),
+                .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Parser"])),
+    ],
             path: "Sources/Manifest"
         ),
-        
+
         .target(
             name: "Manifest Foundation Integration",
             dependencies: [
@@ -49,6 +59,7 @@ let package = Package(
             ],
             path: "Tests/Manifest Tests"
         ),
+        .testTarget(name: "Absorbed swift-manifest-byte-parser Manifest Byte Parser Tests", dependencies: [.target(name: "Manifest")], path: "Tests/Absorbed/swift-manifest-byte-parser/Manifest Byte Parser Tests"),
     ],
     swiftLanguageModes: [.v6]
 )
