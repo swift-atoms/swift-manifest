@@ -1,1 +1,1 @@
-public enum Manifest: Swift.Sendable {}
+public enum Manifest: Swift::Sendable {}

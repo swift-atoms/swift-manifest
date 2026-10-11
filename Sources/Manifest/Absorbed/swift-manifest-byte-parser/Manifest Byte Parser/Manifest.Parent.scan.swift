@@ -6,9 +6,9 @@ internal import Parser
 extension Manifest.Parent {
 
     public static func scan(
-        in source: borrowing Swift.String
-    ) -> [Swift.UInt8]? {
-        var lineBuffer: [Swift.UInt8] = []
+        in source: borrowing Swift::String
+    ) -> [Swift::UInt8]? {
+        var lineBuffer: [Swift::UInt8] = []
         lineBuffer.reserveCapacity(128)
         var lineCount = 0
         for byte in source.utf8 {
@@ -31,8 +31,8 @@ extension Manifest.Parent {
 
     @inline(__always)
     private static func parse(
-        _ line: Swift.ArraySlice<Swift.UInt8>
-    ) -> [Swift.UInt8]? {
+        _ line: Swift::ArraySlice<Swift::UInt8>
+    ) -> [Swift::UInt8]? {
         var input = Array(line)[...]
 
         while let first = input.first,
@@ -44,8 +44,8 @@ extension Manifest.Parent {
         }
 
         do {
-            try [Swift.UInt8].Parser<Swift.ArraySlice<Swift.UInt8>>(
-                Swift.Array("// parent:".utf8)
+            try [Swift::UInt8].Parser<Swift::ArraySlice<Swift::UInt8>>(
+                Swift::Array("// parent:".utf8)
             ).parse(&input)
         } catch {
             return nil
@@ -59,7 +59,7 @@ extension Manifest.Parent {
             _ = input.next()
         }
 
-        var urlBytes: [Swift.UInt8] = []
+        var urlBytes: [Swift::UInt8] = []
         urlBytes.reserveCapacity(64)
         while let first = input.first {
             if first == 0x20

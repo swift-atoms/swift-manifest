@@ -19,7 +19,7 @@ struct `Manifest parent scanning preserves bytes and line limits` {
         let content = """
             // parent: https://raw.githubusercontent.com/swift-institute/.github/main/Lint.swift
             """
-        let expected = Swift.Array(
+        let expected = Swift::Array(
             "https://raw.githubusercontent.com/swift-institute/.github/main/Lint.swift".utf8
         )
         #expect(Manifest.Parent.scan(in: content) == expected)
@@ -28,41 +28,41 @@ struct `Manifest parent scanning preserves bytes and line limits` {
     @Test
     func `An HTTP parent URL is returned as bytes`() {
         let content = "// parent: http://example.com/Lint.swift\n"
-        let expected = Swift.Array("http://example.com/Lint.swift".utf8)
+        let expected = Swift::Array("http://example.com/Lint.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
     @Test
     func `A file parent URL is returned as bytes`() {
         let content = "// parent: file:///tmp/parent.swift\n"
-        let expected = Swift.Array("file:///tmp/parent.swift".utf8)
+        let expected = Swift::Array("file:///tmp/parent.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
     @Test
     func `Leading spaces before a directive are ignored`() {
         let content = "    // parent: https://example.com/Lint.swift\n"
-        let expected = Swift.Array("https://example.com/Lint.swift".utf8)
+        let expected = Swift::Array("https://example.com/Lint.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
     @Test
     func `Leading tabs before a directive are ignored`() {
         let content = "\t// parent: https://example.com/Lint.swift\n"
-        let expected = Swift.Array("https://example.com/Lint.swift".utf8)
+        let expected = Swift::Array("https://example.com/Lint.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
     @Test
     func `The scanner returns an unknown scheme unchanged`() {
         let content = "// parent: ftp://example.com/Lint.swift\n"
-        let expected = Swift.Array("ftp://example.com/Lint.swift".utf8)
+        let expected = Swift::Array("ftp://example.com/Lint.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
     @Test
     func `A parent directive after the first thirty lines is ignored`() {
-        var lines: [Swift.String] = []
+        var lines: [Swift::String] = []
         for _ in 0..<31 {
             lines.append("// padding")
         }
@@ -73,20 +73,20 @@ struct `Manifest parent scanning preserves bytes and line limits` {
 
     @Test
     func `A parent directive on the thirtieth line is returned`() {
-        var lines: [Swift.String] = []
+        var lines: [Swift::String] = []
         for _ in 0..<29 {
             lines.append("// padding")
         }
         lines.append("// parent: https://example.com/Lint.swift")
         let content = lines.joined(separator: "\n")
-        let expected = Swift.Array("https://example.com/Lint.swift".utf8)
+        let expected = Swift::Array("https://example.com/Lint.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
     @Test
     func `Trailing spaces are excluded from the parent value`() {
         let content = "// parent: https://example.com/Lint.swift   \n"
-        let expected = Swift.Array("https://example.com/Lint.swift".utf8)
+        let expected = Swift::Array("https://example.com/Lint.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
@@ -101,7 +101,7 @@ struct `Manifest parent scanning preserves bytes and line limits` {
             // parent: https://first.example.com/Lint.swift
             // parent: https://second.example.com/Lint.swift
             """
-        let expected = Swift.Array("https://first.example.com/Lint.swift".utf8)
+        let expected = Swift::Array("https://first.example.com/Lint.swift".utf8)
         #expect(Manifest.Parent.scan(in: content) == expected)
     }
 
@@ -111,9 +111,9 @@ struct `Manifest parent scanning preserves bytes and line limits` {
         hasTrailingNewline: Bool
     ) {
         let value = "https://example.com/parent.swift"
-        let source = Swift.String(repeating: "// padding\n", count: lineNumber - 1)
+        let source = Swift::String(repeating: "// padding\n", count: lineNumber - 1)
             + "// parent: " + value + (hasTrailingNewline ? "\n" : "")
-        let expected: [Swift.UInt8]? = lineNumber <= 30 ? Swift.Array(value.utf8) : nil
+        let expected: [Swift::UInt8]? = lineNumber <= 30 ? Swift::Array(value.utf8) : nil
         #expect(Manifest.Parent.scan(in: source) == expected)
     }
 
@@ -122,27 +122,27 @@ struct `Manifest parent scanning preserves bytes and line limits` {
         "../e\u{301}/📁",
         "value\u{00A0}with\u{2028}separators",
     ])
-    func `Unicode values retain their original UTF8 bytes`(value: Swift.String) {
-        #expect(Manifest.Parent.scan(in: "// parent: " + value) == Swift.Array(value.utf8))
+    func `Unicode values retain their original UTF8 bytes`(value: Swift::String) {
+        #expect(Manifest.Parent.scan(in: "// parent: " + value) == Swift::Array(value.utf8))
     }
 
     @Test(arguments: ["\u{00A0}", "\u{2003}"])
-    func `Unicode whitespace does not indent a parent directive`(indentation: Swift.String) {
+    func `Unicode whitespace does not indent a parent directive`(indentation: Swift::String) {
         #expect(Manifest.Parent.scan(in: indentation + "// parent: value") == nil)
     }
 
     @Test
     func `Carriage returns do not count as line delimiters`() {
         let value = "https://example.com/parent.swift"
-        let source = Swift.String(repeating: "// padding\r", count: 31)
+        let source = Swift::String(repeating: "// padding\r", count: 31)
             + "\n// parent: " + value
-        #expect(Manifest.Parent.scan(in: source) == Swift.Array(value.utf8))
+        #expect(Manifest.Parent.scan(in: source) == Swift::Array(value.utf8))
     }
 
     @Test
     func `Empty directives do not hide a later nonempty value`() {
         let source = "// parent:\n\t// parent: \t\r\n// parent: chosen"
-        #expect(Manifest.Parent.scan(in: source) == Swift.Array("chosen".utf8))
+        #expect(Manifest.Parent.scan(in: source) == Swift::Array("chosen".utf8))
     }
 
     @Test(arguments: [
@@ -154,15 +154,15 @@ struct `Manifest parent scanning preserves bytes and line limits` {
         "// parent",
         "// paren: value",
     ])
-    func `The directive marker must match exactly after ASCII indentation`(source: Swift.String) {
+    func `The directive marker must match exactly after ASCII indentation`(source: Swift::String) {
         #expect(Manifest.Parent.scan(in: source) == nil)
     }
 
     @Test(arguments: [" ", "\t", "\r"])
-    func `ASCII value terminators exclude subsequent bytes`(terminator: Swift.String) {
+    func `ASCII value terminators exclude subsequent bytes`(terminator: Swift::String) {
         #expect(
             Manifest.Parent.scan(in: "// parent: first" + terminator + "second")
-                == Swift.Array("first".utf8)
+                == Swift::Array("first".utf8)
         )
     }
 }

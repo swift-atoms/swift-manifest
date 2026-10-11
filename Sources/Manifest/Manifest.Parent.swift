@@ -1,4 +1,4 @@
 extension Manifest {
 
-    public enum Parent: Swift.Sendable {}
+    public enum Parent: Swift::Sendable {}
 }
