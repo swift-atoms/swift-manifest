@@ -1,8 +1,10 @@
+public import Path
+
 extension Manifest {
 
     public struct Dependency: Swift::Sendable {
 
-        public let path: Swift::String
+        public let path: Path::Path
 
         public let name: Swift::String
 
@@ -11,7 +13,7 @@ extension Manifest {
         public let imports: [Swift::String]
 
         public init(
-            path: Swift::String,
+            path: Path::Path,
             name: Swift::String,
             product: Swift::String,
             imports: [Swift::String]

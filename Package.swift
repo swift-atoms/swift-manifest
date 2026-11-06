@@ -24,6 +24,7 @@ let package = Package(
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-cursor.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-parser.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-path.git", branch: "main"),
     ],
     targets: [
         .target(
@@ -32,6 +33,7 @@ let package = Package(
                 .product(name: "ASCII", package: "swift-ascii", condition: .when(traits: ["Parser"])),
                 .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"])),
                 .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Parser"])),
+                .product(name: "Path", package: "swift-path"),
             ],
             path: "Sources/Manifest"
         ),
