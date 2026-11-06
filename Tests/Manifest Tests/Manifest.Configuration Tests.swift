@@ -11,14 +11,14 @@ extension Manifest.Configuration {
 
 extension Manifest.Configuration.`Manifest configurations preserve supplied settings and toolchain overrides`.`Manifest configuration construction retains settings and optional toolchain paths` {
     @Test
-    func `Configuration constructs with all parameters`() {
+    func `Configuration constructs with all parameters`() throws {
         let configuration = Manifest.Configuration(
             root: "/tmp/example",
             filename: "Lint.swift",
             binding: "manifest",
             dependencies: [
                 Manifest.Dependency(
-                    path: "/tmp/some-package",
+                    path: try Path(validating: "/tmp/some-package"),
                     name: "some-package",
                     product: "Some Product",
                     imports: ["Some_Product"]
