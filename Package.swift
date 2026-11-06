@@ -55,6 +55,7 @@ let package = Package(
         .testTarget(
             name: "Manifest Tests",
             dependencies: [
+                .product(name: "Path", package: "swift-path"),
                 .target(name: "Manifest"),
                 .target(name: "Manifest Test Support"),
             ],

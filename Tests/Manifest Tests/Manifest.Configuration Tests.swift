@@ -1,4 +1,5 @@
 import Manifest
+import Path
 import Testing
 
 extension Manifest.Configuration {
