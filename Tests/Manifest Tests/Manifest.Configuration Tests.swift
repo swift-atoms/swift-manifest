@@ -5,8 +5,11 @@ import Testing
 extension Manifest.Configuration {
     @Suite
     struct `Manifest configurations preserve supplied settings and toolchain overrides` {
-        @Suite struct `Manifest configuration construction retains settings and optional toolchain paths` {}
     }
+}
+
+extension Manifest.Configuration.`Manifest configurations preserve supplied settings and toolchain overrides` {
+    @Suite struct `Manifest configuration construction retains settings and optional toolchain paths` {}
 }
 
 extension Manifest.Configuration.`Manifest configurations preserve supplied settings and toolchain overrides`.`Manifest configuration construction retains settings and optional toolchain paths` {
