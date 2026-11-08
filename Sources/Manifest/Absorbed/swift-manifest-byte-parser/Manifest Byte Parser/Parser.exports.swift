@@ -1,5 +1,5 @@
 #if Parser
-    public import ASCII
-    public import Cursor
-    public import Parser
+    import ASCII
+    import Cursor
+    import Parser
 #endif
