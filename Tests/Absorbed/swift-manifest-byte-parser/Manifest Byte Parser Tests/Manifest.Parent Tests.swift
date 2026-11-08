@@ -2,9 +2,9 @@
     import Manifest
     import Testing
 
-enum `Manifest.Parent Tests` {}
+    enum `Manifest.Parent Tests` {}
 
-extension `Manifest.Parent Tests` {
+    extension `Manifest.Parent Tests` {
         @Suite
         struct `Manifest parent scanning preserves bytes and line limits` {
             @Test
@@ -171,5 +171,5 @@ extension `Manifest.Parent Tests` {
                 )
             }
         }
-}
+    }
 #endif
